@@ -1,0 +1,27 @@
+server:
+  servlet:
+    context-path: /api
+---
+spring:
+  jackson:
+    time-zone: Asia/Bangkok
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lottery?useUnicode=yes&characterEncoding=UTF-8&connectTimeout=0&socketTimeout=0&autoReconnect=true&useSSL=false
+    username: user
+    password: password
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+---
+springdoc:
+  packagesToScan: com.example.lottery
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+---
