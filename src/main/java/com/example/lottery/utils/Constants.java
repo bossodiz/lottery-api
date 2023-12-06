@@ -4,7 +4,7 @@ public class Constants {
     public static final String THREE_DIGIT_FRONT = "three_digit_front";
     public static final String THREE_DIGIT_LAST = "three_digit_last";
     public static final String TWO_DIGIT_LAST = "two_digit_last";
-    public static final String SIX_DIGIT = "six_digit";
+    public static final String SIX_DIGIT = "number";
 
     public static final int THREE_DIGIT_FRONT_ID = 1;
     public static final int THREE_DIGIT_LAST_ID = 2;

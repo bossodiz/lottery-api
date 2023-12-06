@@ -3,6 +3,7 @@ package com.example.lottery.controller;
 import com.example.lottery.controller.request.AddLotteryRequest;
 import com.example.lottery.controller.request.AddPlayerRequest;
 import com.example.lottery.controller.response.Response;
+import com.example.lottery.error.DuplicateException;
 import com.example.lottery.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class DashboardController {
     }
 
     @PostMapping("add-lottery")
-    public Response addLottery(@RequestBody AddLotteryRequest request) {
+    public Response addLottery(@RequestBody AddLotteryRequest request) throws DuplicateException {
         return service.addLottery(request);
     }
 }

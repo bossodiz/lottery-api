@@ -8,6 +8,7 @@ import com.example.lottery.datasource.entity.LotteryNumber;
 import com.example.lottery.datasource.entity.Player;
 import com.example.lottery.datasource.repository.LotteryNumberRepository;
 import com.example.lottery.datasource.repository.PlayerRepository;
+import com.example.lottery.error.DuplicateException;
 import com.example.lottery.service.model.LotteryPlayer;
 import com.example.lottery.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class DashboardService {
 
     public Response addPlayer(AddPlayerRequest request) {
         Player player = new Player();
-        player.setName(request.getName());
+        player.setName(request.getName().trim());
         player = playerRepository.save(player);
         return Response.builder()
                 .code(0)
@@ -55,12 +56,16 @@ public class DashboardService {
                 .build();
     }
 
-    public Response addLottery(AddLotteryRequest request) {
-        LotteryNumber lotteryNumber = lotteryNumberRepository.findByNumber(request.getLottery()).orElse(new LotteryNumber());
-        lotteryNumber.setNumber(request.getLottery());
-        lotteryNumber.setTwoDigitLast(StringUtils.getLast(request.getLottery(), 2));
-        lotteryNumber.setThreeDigitFront(StringUtils.getFront(request.getLottery(), 3));
-        lotteryNumber.setThreeDigitLast(StringUtils.getLast(request.getLottery(), 3));
+    public Response addLottery(AddLotteryRequest request) throws DuplicateException {
+        String number = request.getLottery().trim();
+        LotteryNumber lotteryNumber = lotteryNumberRepository.findByNumber(number).orElse(new LotteryNumber());
+        if (lotteryNumber.getPlayerId() != null) {
+            throw new DuplicateException("มีคนลงทะเบียนเลขนี้ไปแล้ว");
+        }
+        lotteryNumber.setNumber(number);
+        lotteryNumber.setTwoDigitLast(StringUtils.getLast(number, 2));
+        lotteryNumber.setThreeDigitFront(StringUtils.getFront(number, 3));
+        lotteryNumber.setThreeDigitLast(StringUtils.getLast(number, 3));
         lotteryNumber.setPlayerId(request.getPlayerId());
         lotteryNumberRepository.save(lotteryNumber);
         return Response.builder()

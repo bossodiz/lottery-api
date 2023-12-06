@@ -59,7 +59,7 @@ public class AwardsService {
 
     public Response getAwardsSubmit(AwardsSubmitRequest request) {
         RewardHistory rewardHistory = new RewardHistory();
-        rewardHistory.setRewardNumber(request.getNumber());
+        rewardHistory.setRewardNumber(request.getNumber().trim());
         rewardHistory.setRewardTypeId(request.getLotteryTypeId());
         rewardHistory = rewardHistoryRepository.save(rewardHistory);
         return Response.builder()

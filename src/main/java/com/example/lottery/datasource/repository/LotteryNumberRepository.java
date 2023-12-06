@@ -3,6 +3,7 @@ package com.example.lottery.datasource.repository;
 import com.example.lottery.datasource.entity.LotteryNumber;
 import com.example.lottery.service.model.LotteryPlayer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, Integer> {
+public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, Integer>,
+        JpaSpecificationExecutor<LotteryNumber> {
     @Query("SELECT new com.example.lottery.service.model.LotteryPlayer(COUNT(L.playerId), P.name) " +
             " FROM LotteryNumber L " +
             " INNER JOIN Player P ON P.id = L.playerId" +
@@ -19,7 +21,10 @@ public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, In
             " ORDER BY P.name ASC ")
     List<LotteryPlayer> findAllByPlayer();
 
-    Optional<LotteryNumber> findByNumber(String number);
+    @Query("SELECT L " +
+            " FROM LotteryNumber L " +
+            " WHERE L.number = :number")
+    Optional<LotteryNumber> findByNumber(@Param("number") String number);
 
 
     @Query(value = "select * " +
@@ -63,4 +68,5 @@ public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, In
             "ORDER BY RAND()  "
             , nativeQuery = true)
     List<String> find1stLottery(@Param("reward_type_id") Integer rewardTypeId);
+
 }
