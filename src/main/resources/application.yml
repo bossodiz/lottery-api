@@ -19,9 +19,8 @@ spring:
       ddl-auto: none
     show-sql: true
 ---
+
 springdoc:
-  packagesToScan: com.example.lottery
   swagger-ui:
     path: /swagger-ui.html
-    disable-swagger-default-url: true
 ---

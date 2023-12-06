@@ -14,7 +14,7 @@ public class LotteryController {
     private HelloService service;
 
     @GetMapping("hello")
-    public Response<Object> hello() throws DataNotFoundException {
+    public Response hello() throws DataNotFoundException {
         return service.hello();
     }
 }

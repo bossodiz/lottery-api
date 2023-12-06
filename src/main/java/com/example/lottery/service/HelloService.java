@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HelloService {
-    public Response<Object> hello() {
-        Response<Object> response = Response.builder()
-                .data("hello")
+    public Response hello() {
+        String resp = "hello";
+        return Response.builder()
+                .data(resp)
                 .build();
-        return response;
     }
 }

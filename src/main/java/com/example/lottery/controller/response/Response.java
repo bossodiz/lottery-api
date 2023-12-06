@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Response<T> {
+public class Response {
     private int code;
     private String errorMessage;
-    private T data;
+    private Object data;
 
 }
