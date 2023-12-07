@@ -10,5 +10,6 @@ import lombok.Data;
 public class LotteryPlayer {
     private Long total;
     private String playerName;
+    private String color;
 
 }

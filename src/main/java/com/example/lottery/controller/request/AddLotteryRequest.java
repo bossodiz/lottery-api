@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class AddLotteryRequest {
     private String lottery;
-    private Integer playerId;
+    private String playerName;
 }

@@ -14,11 +14,11 @@ import java.util.Optional;
 @Repository
 public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, Integer>,
         JpaSpecificationExecutor<LotteryNumber> {
-    @Query("SELECT new com.example.lottery.service.model.LotteryPlayer(COUNT(L.playerId), P.name) " +
-            " FROM LotteryNumber L " +
-            " INNER JOIN Player P ON P.id = L.playerId" +
-            " GROUP BY L.playerId" +
-            " ORDER BY P.name ASC ")
+    @Query("SELECT new com.example.lottery.service.model.LotteryPlayer(COUNT(L.number), P.name, P.color) " +
+            " FROM Player P " +
+            " LEFT JOIN LotteryNumber L ON P.id = L.playerId" +
+            " GROUP BY P.id, P.color" +
+            " ORDER BY COUNT(L.number) DESC, P.name ASC")
     List<LotteryPlayer> findAllByPlayer();
 
     @Query("SELECT L " +
@@ -29,8 +29,7 @@ public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, In
 
     @Query(value = "select * " +
                     "from lottery_number " +
-                    "where player_id is not null " +
-                    "ORDER BY RAND() ", nativeQuery = true)
+                    "where player_id is null ", nativeQuery = true)
     List<LotteryNumber> findAllByNoPlayer();
 
     @Query(value = "select DISTINCT l.two_digit_last " +

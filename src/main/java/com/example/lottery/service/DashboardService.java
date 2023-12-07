@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DashboardService {
@@ -49,6 +51,12 @@ public class DashboardService {
     public Response addPlayer(AddPlayerRequest request) {
         Player player = new Player();
         player.setName(request.getName().trim());
+        String colorStr = "rgb(%s, %s, %s)";
+        do {
+            Color color = new Color((int) (Math.random() * 0x1000000));
+            colorStr = String.format(colorStr, color.getRed(), color.getGreen(), color.getBlue());
+        } while (playerRepository.existsPlayerByColor(colorStr));
+        player.setColor(colorStr);
         player = playerRepository.save(player);
         return Response.builder()
                 .code(0)
@@ -62,11 +70,15 @@ public class DashboardService {
         if (lotteryNumber.getPlayerId() != null) {
             throw new DuplicateException("มีคนลงทะเบียนเลขนี้ไปแล้ว");
         }
+        Optional<Player> optionalPlayer = playerRepository.findFirstByName(request.getPlayerName());
+        if (!optionalPlayer.isPresent()) {
+            throw new DuplicateException("ไม่มีชื่อนี้ในระบบ");
+        }
         lotteryNumber.setNumber(number);
         lotteryNumber.setTwoDigitLast(StringUtils.getLast(number, 2));
         lotteryNumber.setThreeDigitFront(StringUtils.getFront(number, 3));
         lotteryNumber.setThreeDigitLast(StringUtils.getLast(number, 3));
-        lotteryNumber.setPlayerId(request.getPlayerId());
+        lotteryNumber.setPlayerId(optionalPlayer.get().getId());
         lotteryNumberRepository.save(lotteryNumber);
         return Response.builder()
                 .code(0)
