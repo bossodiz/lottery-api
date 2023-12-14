@@ -26,7 +26,6 @@ public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, In
             " WHERE L.number = :number")
     Optional<LotteryNumber> findByNumber(@Param("number") String number);
 
-
     @Query(value = "select * " +
                     "from lottery_number " +
                     "where player_id is null ", nativeQuery = true)
