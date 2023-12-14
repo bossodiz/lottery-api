@@ -15,22 +15,22 @@ public class DashboardController {
     @Autowired
     private DashboardService service;
 
-    @GetMapping("get-chart")
+    @GetMapping("/get-chart")
     public Response getChart(){
         return service.getChart();
     }
 
-    @GetMapping("get-players")
+    @GetMapping("/get-players")
     public Response getPlayers(){
         return service.getPlayers();
     }
 
-    @PostMapping("add-player")
+    @PostMapping("/add-player")
     public Response addPlayer(@RequestBody AddPlayerRequest request) {
         return service.addPlayer(request);
     }
 
-    @PostMapping("add-lottery")
+    @PostMapping("/add-lottery")
     public Response addLottery(@RequestBody AddLotteryRequest request) throws DuplicateException {
         return service.addLottery(request);
     }

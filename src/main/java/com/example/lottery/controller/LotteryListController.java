@@ -13,19 +13,13 @@ public class LotteryListController {
     @Autowired
     private LotteryListService lotteryListService;
 
-    @PostMapping("/table")
+    @PostMapping("/search")
     public Response getDataLottery(@RequestBody LotteryTableRequest lotteryTableRequest){
         return lotteryListService.getAll(lotteryTableRequest);
     }
-    @GetMapping("get-players")
+    @GetMapping("/get-players")
     public Response getPlayers(){
         return lotteryListService.getAllPlayers();
     }
-
-    @GetMapping("get-lottery")
-    public Response getLottery(){
-        return lotteryListService.getAllLottery();
-    }
-
 
 }

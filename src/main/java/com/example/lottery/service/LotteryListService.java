@@ -1,14 +1,14 @@
 package com.example.lottery.service;
 
 import com.example.lottery.controller.request.LotteryTableRequest;
-import com.example.lottery.controller.response.GetChartResponse;
 import com.example.lottery.controller.response.LotteryTableResponse;
 import com.example.lottery.controller.response.Response;
 import com.example.lottery.datasource.entity.LotteryNumber;
 import com.example.lottery.datasource.entity.Player;
 import com.example.lottery.datasource.repository.LotteryNumberRepository;
-import com.example.lottery.service.model.LotteryPlayer;
+import com.example.lottery.datasource.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +22,9 @@ public class LotteryListService {
     @Autowired
     private LotteryNumberRepository lotteryNumberRepository;
 
+    @Autowired
+    private PlayerRepository playerRepository;
+
     public Response getAll(LotteryTableRequest request) {
         List<LotteryNumber> result = lotteryNumberRepository.findAll();
         LotteryTableResponse response = LotteryTableResponse.builder()
@@ -31,24 +34,10 @@ public class LotteryListService {
     }
 
     public Response getAllPlayers() {
-        List<LotteryPlayer> lotteryPlayerList = lotteryNumberRepository.findAllByPlayer();
-        GetChartResponse getChartResponse = GetChartResponse.builder()
-                .lotteryPlayer(lotteryPlayerList)
-                .build();
+        List<Player> players =  playerRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         return Response.builder()
                 .code(0)
-                .data(getChartResponse)
-                .build();
-    }
-
-    public Response getAllLottery() {
-        List<LotteryNumber> lotteryNumberList = lotteryNumberRepository.findAll();
-        LotteryTableResponse getChartResponse = LotteryTableResponse.builder()
-                .data(lotteryNumberList)
-                .build();
-        return Response.builder()
-                .code(0)
-                .data(getChartResponse)
+                .data(players)
                 .build();
     }
 

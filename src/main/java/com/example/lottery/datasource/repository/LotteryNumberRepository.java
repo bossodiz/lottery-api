@@ -66,14 +66,4 @@ public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, In
             "ORDER BY RAND()  "
             , nativeQuery = true)
     List<String> find1stLottery(@Param("reward_type_id") Integer rewardTypeId);
-
-
-    @Query("select L " +
-            "from LotteryNumber L " +
-            "where player_id is not null " +
-            "and rh.reward_number is null " +
-            "ORDER BY RAND()  ")
-    List<LotteryNumber> findAll(@Param("lotteryTypeId") int lotteryTypeId, @Param("number") String number,
-                                @Param("playerId") int  playerId);
-
 }
