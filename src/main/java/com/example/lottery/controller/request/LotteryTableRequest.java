@@ -17,12 +17,6 @@ import static com.example.lottery.utils.Constants.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LotteryTableRequest {
-    private Integer page;
-    private Integer pageSize;
-    private String sort;
-    //    number,three_digit_front,three_digit_last,two_digit_last,player_id
-    private String direction;
-    //    ASC,DESC
     private Integer lotteryTypeId;
     private String number;
     private Integer playerId;

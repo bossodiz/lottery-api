@@ -14,10 +14,4 @@ import java.util.List;
 @NoArgsConstructor
 public class LotteryTableResponse {
     List<LotteryNumber> data;
-    private Integer page;
-    private Integer pageSize;
-    private Integer totalPage;
-    private Integer totalRecord;
-    private String sort;
-    private String direction;
 }
