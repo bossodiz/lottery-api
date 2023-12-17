@@ -21,6 +21,13 @@ public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, In
             " ORDER BY COUNT(L.number) DESC, P.name ASC")
     List<LotteryPlayer> findAllByPlayer();
 
+    @Query("SELECT new com.example.lottery.datasource.entity.LotteryNumber(L.id, L.number, L.threeDigitFront, " +
+            " L.threeDigitLast, L.twoDigitLast, L.playerId, P.name) " +
+            " FROM LotteryNumber L " +
+            " LEFT JOIN Player P ON P.id = L.playerId " +
+            " ORDER BY L.number ASC ")
+    List<LotteryNumber> findAllOrderByNumberAsc();
+
     @Query("SELECT L " +
             " FROM LotteryNumber L " +
             " WHERE L.number = :number")

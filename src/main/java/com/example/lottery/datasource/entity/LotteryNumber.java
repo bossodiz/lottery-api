@@ -1,10 +1,14 @@
 package com.example.lottery.datasource.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LotteryNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +20,5 @@ public class LotteryNumber {
     private Integer playerId;
     @Transient
     private String playerName;
+
 }

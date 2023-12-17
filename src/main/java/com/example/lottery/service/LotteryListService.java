@@ -1,6 +1,5 @@
 package com.example.lottery.service;
 
-import com.example.lottery.controller.request.LotteryTableRequest;
 import com.example.lottery.controller.response.LotteryTableResponse;
 import com.example.lottery.controller.response.Response;
 import com.example.lottery.datasource.entity.LotteryNumber;
@@ -25,8 +24,8 @@ public class LotteryListService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public Response getAll(LotteryTableRequest request) {
-        List<LotteryNumber> result = lotteryNumberRepository.findAll();
+    public Response getAll() {
+        List<LotteryNumber> result = lotteryNumberRepository.findAllOrderByNumberAsc();
         LotteryTableResponse response = LotteryTableResponse.builder()
                 .data(result)
                 .build();
