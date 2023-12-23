@@ -3,7 +3,6 @@ package com.example.lottery.controller;
 import com.example.lottery.controller.request.AwardsSubmitRequest;
 import com.example.lottery.controller.response.Response;
 import com.example.lottery.service.AwardsService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class AwardsController {
         return service.getAwardsType();
     }
     @GetMapping("/data")
-    public Response getAwards(@PathParam("type") Integer typeId){
+    public Response getAwards(@RequestParam("type") Integer typeId){
         return service.getAwards(typeId);
     }
     @PostMapping("/submit")

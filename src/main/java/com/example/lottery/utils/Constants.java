@@ -10,5 +10,6 @@ public class Constants {
     public static final int THREE_DIGIT_LAST_ID = 2;
     public static final int TWO_DIGIT_LAST_ID = 3;
     public static final int SIX_DIGIT_ID = 4;
+    public static final int PLAYERS_ID = 5;
 
 }

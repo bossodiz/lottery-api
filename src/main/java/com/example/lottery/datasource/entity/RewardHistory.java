@@ -12,6 +12,6 @@ public class RewardHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String rewardNumber;
+    private String reward;
     private int rewardTypeId;
 }

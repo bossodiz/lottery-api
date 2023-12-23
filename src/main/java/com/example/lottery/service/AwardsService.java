@@ -47,6 +47,8 @@ public class AwardsService {
                 list = lotteryNumberRepository.findTwoDigitLastLottery(TWO_DIGIT_LAST_ID);
             case SIX_DIGIT_ID ->
                 list = lotteryNumberRepository.find1stLottery(SIX_DIGIT_ID);
+            case PLAYERS_ID->
+                list = lotteryNumberRepository.findByPlayer();
         }
         AwardsResponse awardsResponse = AwardsResponse.builder()
                 .lottery(list)
@@ -59,7 +61,7 @@ public class AwardsService {
 
     public Response getAwardsSubmit(AwardsSubmitRequest request) {
         RewardHistory rewardHistory = new RewardHistory();
-        rewardHistory.setRewardNumber(request.getNumber().trim());
+        rewardHistory.setReward(request.getNumber().trim());
         rewardHistory.setRewardTypeId(request.getLotteryTypeId());
         rewardHistory = rewardHistoryRepository.save(rewardHistory);
         return Response.builder()

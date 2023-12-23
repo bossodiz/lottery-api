@@ -57,6 +57,7 @@ public class DashboardService {
             colorStr = String.format(colorStr, color.getRed(), color.getGreen(), color.getBlue());
         } while (playerRepository.existsPlayerByColor(colorStr));
         player.setColor(colorStr);
+        player.setIsPrizeDraw(false);
         player = playerRepository.save(player);
         return Response.builder()
                 .code(0)

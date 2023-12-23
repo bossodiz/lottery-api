@@ -40,37 +40,44 @@ public interface LotteryNumberRepository extends JpaRepository<LotteryNumber, In
 
     @Query(value = "select DISTINCT l.two_digit_last " +
             "from lottery_number l " +
-            "left join reward_history rh on (rh.reward_number = l.two_digit_last and rh.reward_type_id =:reward_type_id ) " +
+            "left join reward_history rh on (rh.reward = l.two_digit_last and rh.reward_type_id =:reward_type_id ) " +
             "where player_id is not null " +
-            "and rh.reward_number is null " +
+            "and rh.reward is null " +
             "ORDER BY RAND()  "
             , nativeQuery = true)
     List<String> findTwoDigitLastLottery(@Param("reward_type_id") Integer rewardTypeId);
 
     @Query(value = "select DISTINCT l.three_digit_front " +
             "from lottery_number l " +
-            "left join reward_history rh on (rh.reward_number = l.three_digit_front and rh.reward_type_id =:reward_type_id ) " +
+            "left join reward_history rh on (rh.reward = l.three_digit_front and rh.reward_type_id =:reward_type_id ) " +
             "where player_id is not null " +
-            "and rh.reward_number is null " +
+            "and rh.reward is null " +
             "ORDER BY RAND()  "
             , nativeQuery = true)
     List<String> findThreeDigitFrontLottery(@Param("reward_type_id") Integer rewardTypeId);
 
     @Query(value = "select DISTINCT l.three_digit_last " +
             "from lottery_number l " +
-            "left join reward_history rh on (rh.reward_number = l.three_digit_last and rh.reward_type_id =:reward_type_id ) " +
+            "left join reward_history rh on (rh.reward = l.three_digit_last and rh.reward_type_id =:reward_type_id ) " +
             "where player_id is not null " +
-            "and rh.reward_number is null " +
+            "and rh.reward is null " +
             "ORDER BY RAND()  "
             , nativeQuery = true)
     List<String> findThreeDigitLastLottery(@Param("reward_type_id") Integer rewardTypeId);
 
     @Query(value = "select DISTINCT l.number " +
             "from lottery_number l " +
-            "left join reward_history rh on (rh.reward_number = l.number and rh.reward_type_id =:reward_type_id ) " +
+            "left join reward_history rh on (rh.reward = l.number and rh.reward_type_id =:reward_type_id ) " +
             "where player_id is not null " +
-            "and rh.reward_number is null " +
+            "and rh.reward is null " +
             "ORDER BY RAND()  "
             , nativeQuery = true)
     List<String> find1stLottery(@Param("reward_type_id") Integer rewardTypeId);
+
+    @Query(value = "select DISTINCT p.name " +
+            "from player p " +
+            "where is_prize_draw = 0 " +
+            "ORDER BY RAND()  "
+            , nativeQuery = true)
+    List<String> findByPlayer();
 }
