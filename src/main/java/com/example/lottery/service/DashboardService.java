@@ -2,6 +2,7 @@ package com.example.lottery.service;
 
 import com.example.lottery.controller.request.AddLotteryRequest;
 import com.example.lottery.controller.request.AddPlayerRequest;
+import com.example.lottery.controller.request.DeletePlayerRequest;
 import com.example.lottery.controller.response.GetChartResponse;
 import com.example.lottery.controller.response.Response;
 import com.example.lottery.datasource.entity.LotteryNumber;
@@ -48,9 +49,14 @@ public class DashboardService {
                 .build();
     }
 
-    public Response addPlayer(AddPlayerRequest request) {
+    public Response addPlayer(AddPlayerRequest request) throws DuplicateException {
         Player player = new Player();
         player.setName(request.getName().trim());
+        Player checkPlayer = playerRepository.findFirstByName(player.getName()).orElse(new Player());
+        if(checkPlayer.getName() != null ) {
+            throw new DuplicateException("ชื่อนี้มีคนลงทะเบียนไปแล้ว");
+        }
+
         String colorStr = "rgb(%s, %s, %s)";
         do {
             Color color = new Color((int) (Math.random() * 0x1000000));
@@ -84,6 +90,19 @@ public class DashboardService {
         return Response.builder()
                 .code(0)
                 .data(lotteryNumber)
+                .build();
+    }
+
+    public Response deletePlayer(DeletePlayerRequest request) throws DuplicateException {
+        Player player = playerRepository.findFirstByName(request.getName()).orElse(new Player());
+        player.setName(request.getName().trim());
+        if(player.getName() == null ) {
+            throw new DuplicateException("ไม่สามารถลบได้เนื่องจากไม่มีชื่อนี้ในระบบ");
+        }
+        playerRepository.delete(player);
+        return Response.builder()
+                .code(0)
+                .data(player)
                 .build();
     }
 }

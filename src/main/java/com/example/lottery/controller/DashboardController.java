@@ -2,6 +2,7 @@ package com.example.lottery.controller;
 
 import com.example.lottery.controller.request.AddLotteryRequest;
 import com.example.lottery.controller.request.AddPlayerRequest;
+import com.example.lottery.controller.request.DeletePlayerRequest;
 import com.example.lottery.controller.response.Response;
 import com.example.lottery.error.DuplicateException;
 import com.example.lottery.service.DashboardService;
@@ -26,12 +27,17 @@ public class DashboardController {
     }
 
     @PostMapping("/add-player")
-    public Response addPlayer(@RequestBody AddPlayerRequest request) {
+    public Response addPlayer(@RequestBody AddPlayerRequest request) throws DuplicateException {
         return service.addPlayer(request);
     }
 
     @PostMapping("/add-lottery")
     public Response addLottery(@RequestBody AddLotteryRequest request) throws DuplicateException {
         return service.addLottery(request);
+    }
+
+    @PostMapping("/delete-player")
+    public Response deleteLottery(@RequestBody DeletePlayerRequest request) throws DuplicateException {
+        return service.deletePlayer(request);
     }
 }
