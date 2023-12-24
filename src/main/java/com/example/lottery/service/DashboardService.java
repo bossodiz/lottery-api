@@ -48,7 +48,11 @@ public class DashboardService {
                 .build();
     }
 
-    public Response addPlayer(AddPlayerRequest request) {
+    public Response addPlayer(AddPlayerRequest request) throws DuplicateException {
+        Optional<Player> playerOpt = playerRepository.findFirstByName(request.getName().trim());
+        if (playerOpt.isPresent()) {
+            throw new DuplicateException("ชื่อนี้มีคนลงทะเบียนไปแล้ว");
+        }
         Player player = new Player();
         player.setName(request.getName().trim());
         String colorStr = "rgb(%s, %s, %s)";

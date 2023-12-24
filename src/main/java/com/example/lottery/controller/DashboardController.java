@@ -26,7 +26,7 @@ public class DashboardController {
     }
 
     @PostMapping("/add-player")
-    public Response addPlayer(@RequestBody AddPlayerRequest request) {
+    public Response addPlayer(@RequestBody AddPlayerRequest request) throws DuplicateException {
         return service.addPlayer(request);
     }
 
